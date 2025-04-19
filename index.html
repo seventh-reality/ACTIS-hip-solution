@@ -1,172 +1,110 @@
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
-    <title>ACTIS hip soloution</title>
-    <meta charset="utf-8">
-    <meta name="description" content="&lt;model-viewer&gt; template">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" href="./styles.css" rel="stylesheet"/>
-    <!-- OPTIONAL: The :focus-visible polyfill removes the focus ring for some input types -->
-    <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
-    <script src="https://threejs.org/build/three.min.js"></script>
-    <script src="./src/threejs_wasm_worker.js"></script>
-    <script href="https://developers.google.com/ar/develop/java/scene-viewer"></script>	
-    <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>	
+  <title>ACTIS hip solution</title>
+  <meta charset="utf-8">
+  <meta name="description" content="model-viewer template">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type="text/css" href="./styles.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
+  <script src="https://threejs.org/build/three.min.js"></script>
+  <script src="./src/threejs_wasm_worker.js"></script>
+  <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
 </head>
 <body>
-    <div id="card">
-    
-   
-    <model-viewer id="toggle-model" src="Leg.glb"  ar ar-modes="webxr scene-viewer quick-look" camera-controls alt="" shadow-intensity=".25"  touch-action="pan-y"  environment-image="legacy"">
-	 <div class="progress-bar hide" slot="progress-bar">
-          <div class="update-bar"></div>
-      </div>
-      <button slot="ar-button" id="ar-button">
-        View in 4D
-       </button>
-	 <div id="button" style = "display:flex; justify-content: space-between;">
-          <img src="4.png"  align="center" style="width:100px;  padding-left: 5px;padding-top: 0px;"/>
-	  <img src="iitname.png"  style="width:100px;  padding-right: 0px;padding-top: 0px;"/>    
-      </div>   
-	
-     <!-- Flex container for buttons with vertical adjustment -->
-<div style="
-  position: absolute;
-  bottom: 20px; /* Adjust as needed */
-  left: 50%;
-  transform: translate(-45%, 0);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  z-index: 1000;
-">
-  <button class="slide selected" id="3" onclick="switchSrc(3,'Leg.glb')" style="background: none; border: none;">
-    <img src="Icon.png" alt="Leg" style="width: 40px; height: 40px;">
-  </button>
-  <button class="slide selected" id="2" onclick="switchSrc(2,'Hip.glb')" style="background: none; border: none;">
-    <img src="Icon_1.png" alt="Hip" style="width: 40px; height: 40px;">
-  </button>
-  <button class="slide selected" id="1" onclick="switchSrc(1,'Hip_Anim.glb')" style="background: none; border: none;">
-    <img src="Icon_2.png" alt="Animation" style="width: 40px; height: 40px;">
-  </button>
-</div>
 
-        
+  <div id="card">
+    <model-viewer id="toggle-model" src="Leg.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls alt="" shadow-intensity=".25" touch-action="pan-y" environment-image="legacy">
+      
+      <!-- Progress Bar -->
+      <div class="progress-bar hide" slot="progress-bar">
+        <div class="update-bar"></div>
+      </div>
+
+      <!-- AR Button -->
+      <button slot="ar-button" id="ar-button">View in 4D</button>
+
+      <!-- Header Logos -->
+      <div id="button" style="display: flex; justify-content: space-between;">
+        <img src="4.png" style="width:100px; padding-left: 5px;" />
+        <img src="iitname.png" style="width:100px; padding-right: 0px;" />
+      </div>
+
+      <!-- Button Set: Centered with translateY -->
+      <div style="
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        z-index: 1000;
+      ">
+        <button class="slide selected" id="btn-leg" onclick="switchSrc(3,'Leg.glb')" style="background: none; border: none;">
+          <img src="Icon.png" alt="Leg" style="width: 40px; height: 40px;">
+        </button>
+        <button class="slide selected" id="btn-hip" onclick="switchSrc(2,'Hip.glb')" style="background: none; border: none;">
+          <img src="Icon_1.png" alt="Hip" style="width: 40px; height: 40px;">
+        </button>
+        <button class="slide selected" id="btn-anim" onclick="switchSrc(1,'Hip_Anim.glb'); play_to_end();" style="background: none; border: none;">
+          <img src="Icon_2.png" alt="Animation" style="width: 40px; height: 40px;">
+        </button>
+      </div>
+
+      <!-- AR Prompt -->
       <div id="ar-prompt">
-          <img src="ar_hand_prompt.png">
+        <img src="ar_hand_prompt.png">
       </div>
     </model-viewer>
+
+    <!-- External Links Section -->
     <section class="attributiontwo" style="text-align: center; padding: 10px; transform: translateY(-20px);">
-    <p style="background-image: url('black.png'); display: inline-block; padding: 10px;">
+      <p style="background-image: url('black.png'); display: inline-block; padding: 10px;">
         <span style="display: flex; justify-content: center; gap: 20px; align-items: center;">
-            <a href="https://www.jnjmedtech.com/system/files/pdf/AU-116499-210702%20ACTIS%20Design%20Rationale.pdf">
-                <img src="Brochure_1.png" alt="Brochure" style="width:40px;height:40px;">
-            </a>
-            <a href="https://www.youtube.com/watch?v=XydpQaukoEQ">
-                <img src="Video_1.png" alt="Video" style="width:40px;height:40px;">
-            </a>
-            <a href="https://www.jnjmedtech.com/en-US/product/actis-total-hip-solutions">
-                <img src="web_1.png" alt="Website" style="width:40px;height:40px;">
-            </a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSew4D56CSKpONvc30Ay7cLUY6FnPCOs7zK9IPYRLQWQPswbsg/viewform?usp=sf_link">
-                <img src="form_1.png" alt="Form" style="width:40px;height:40px;">
-            </a>
+          <a href="https://www.jnjmedtech.com/system/files/pdf/AU-116499-210702%20ACTIS%20Design%20Rationale.pdf">
+            <img src="Brochure_1.png" alt="Brochure" style="width:40px;height:40px;">
+          </a>
+          <a href="https://www.youtube.com/watch?v=XydpQaukoEQ">
+            <img src="Video_1.png" alt="Video" style="width:40px;height:40px;">
+          </a>
+          <a href="https://www.jnjmedtech.com/en-US/product/actis-total-hip-solutions">
+            <img src="web_1.png" alt="Website" style="width:40px;height:40px;">
+          </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSew4D56CSKpONvc30Ay7cLUY6FnPCOs7zK9IPYRLQWQPswbsg/viewform?usp=sf_link">
+            <img src="form_1.png" alt="Form" style="width:40px;height:40px;">
+          </a>
         </span>
-    </p>
-</section>
+      </p>
+    </section>
+  </div>
 
-    
-<script>
-    
-    const models = ['Leg.glb', 'Hip.glb', 'Boon_anim.glb'];
+  <!-- JavaScript: Model Switcher -->
+  <script>
     const toggleModel = document.querySelector('#toggle-model');
-    // let j = 0;
-    // setInterval(() => toggleModel.setAttribute('src', `${models[j++ % 2]}`), 2000);
-    function switchSrc(indx,src){
-        // if(indx == 2){
-        //     document.getElementById("iitpl").style.setProperty('display','none');
-        //     document.getElementById("tna").style.setProperty('display','none');
-        //     document.getElementById("Brochure").style.setProperty('display','inline');
-        //     document.getElementById("tna2").style.setProperty('display','inline');
-        //     document.getElementById("tna2").style.setProperty('float','right');
-        // }else if(indx== 3){
-        //     document.getElementById("iitpl").setAttribute('style','display:inline');
-        //     document.getElementById("tna").setAttribute('style','display:inline');
-        //     document.getElementById("tna").style.setProperty('float','right');
-        //     document.getElementById("Brochure").setAttribute('style','display:none');
-        //     document.getElementById("tna2").setAttribute('style','display:none');
-        // }else if(indx== 5){
-        //     document.getElementById("iitpl").setAttribute('style','display:inline');
-        //     document.getElementById("tna").setAttribute('style','display:inline');
-        //     document.getElementById("tna").style.setProperty('float','right');
-        // }
-                document.getElementById("1").style.setProperty('display','inline');
-                document.getElementById("2").style.setProperty('display','inline');
-                document.getElementById("3").style.setProperty('display','inline');
-        switch (indx) {
-            case 2:
-		document.getElementById("1").style.setProperty('display','inline');
-		document.getElementById("11").style.setProperty('display','inline');
-		document.getElementById("22").style.setProperty('display','none');
-		document.getElementById("33").style.setProperty('display','none');	
-			
-                document.getElementById("2").style.setProperty('display','inline');
-                document.getElementById("3").style.setProperty('display','inline');
-		
-                
-                break;
-		case 3:
-		document.getElementById("1").style.setProperty('display','inline');
-		document.getElementById("11").style.setProperty('display','none');
-		document.getElementById("22").style.setProperty('display','inline');
-		document.getElementById("33").style.setProperty('display','none');		
-                document.getElementById("2").style.setProperty('display','inline');
-                document.getElementById("3").style.setProperty('display','inline');
-   
-                break;
-		case 3:
-		document.getElementById("1").style.setProperty('display','inline');
-		document.getElementById("11").style.setProperty('display','none');
-		document.getElementById("22").style.setProperty('display','none');
-		document.getElementById("33").style.setProperty('display','inline');		
-                document.getElementById("2").style.setProperty('display','inline');
-                document.getElementById("3").style.setProperty('display','inline');       
-                break;		  
-            default:
-                document.getElementById("1").style.setProperty('display','inline');
-	        document.getElementById("2").style.setProperty('display','inline');
-                document.getElementById("3").style.setProperty('display','inline');
-		
-            break;
-        }
-        toggleModel.setAttribute('src', `${src}`);  
-    }
-</script>
-<script>
-function play_to_end (){
-//play to end or rewind if animation is at end//
-	const modelViewer = document.querySelector('#toggle-model');
-	modelViewer.play();
-	t=modelViewer.duration;
-	t=t*960/1 ;// because duration is in second and time to play and rewind//
-	setTimeout(stop, t);
-}
-function stop(){
-const modelViewer = document.querySelector('#toggle-model');
-modelViewer.pause();
-}
 
-</script>    
-	    
-	    
-	       
-</dev> 
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <script src="script.js"></script>
+    function switchSrc(index, src) {
+      console.log(`Switching to model ${src}`);
+      toggleModel.setAttribute('src', src);
+
+      // You can add visual state updates here later if needed
+    }
+
+    function play_to_end() {
+      const modelViewer = document.querySelector('#toggle-model');
+      modelViewer.play();
+      const duration = modelViewer.duration * 960;
+      setTimeout(() => modelViewer.pause(), duration);
+    }
+  </script>
+
+  <!-- External Scripts -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
